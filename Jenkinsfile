@@ -19,18 +19,18 @@ pipeline {
       steps { 
         sh './output' 
         echo 'Test Stage Successful' 
-        } 
-      } 
-    } 
+        }  
+      }
     stage('Deploy') { 
       steps { 
         echo 'Deployment Successful' 
       } 
-    } 
-  } 
+    }
+  }
   post { 
     failure { 
       echo 'Pipeline failed' 
     } 
-  } 
+  }
 }
+

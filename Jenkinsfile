@@ -1,26 +1,29 @@
 pipeline { 
   agent any 
   stages { 
+    stage('Clone repository'){
+      steps {
+        checkout([$class: 'GitSCM',
+                  branches: [[name: '*/main']],
+                  userRemoteConfigs: [[ url: 'https://github.com/N3haS/PES1UG22AM104_Jenkins.git']]])
+        }
+    }                        
     stage('Build') { 
       steps { 
-        sh 'mvn clean install' 
-        echo 'Build Stage Successful' 
+        build 'PES1UG22AM104-1'
+        sh 'g++ main1.cpp -o output'
+        echo 'Build Stage Successfu' 
       } 
     } 
     stage('Test') { 
       steps { 
-        sh 'mvn test' 
+        sh './output' 
         echo 'Test Stage Successful' 
-        post { 
-          always { 
-            junit 'target/surefire-reports/*.xml" 
-          } 
         } 
       } 
     } 
     stage('Deploy') { 
       steps { 
-        sh 'mvn deploy' 
         echo 'Deployment Successful' 
       } 
     } 
